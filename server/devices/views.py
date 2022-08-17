@@ -5,6 +5,7 @@ from rest_framework.viewsets import ModelViewSet
 
 from .models import Device, CompanyUse, ClassOfDevice, SiCheck, IoCheck, IndicatorCheck, SkCheck, IntervalCheck, \
     CompanyCheck, TypeOfSi
+from .permissions import IsStaffOnlyOrReadAny
 from .serializers import DeviceSerializer, CompanyUseSerializer, ClassOfDeviceSerializer, SiCheckSerializer, \
     IoCheckSerializer, IndicatorCheckSerializer, SkCheckSerializer, IntervalCheckSerializer, CompanyCheckSerializer, \
     TypeOfSiSerializer
@@ -16,12 +17,14 @@ class DeviceViewSet(ModelViewSet):
     # get all company uses
     queryset = Device.objects.all()
     serializer_class = DeviceSerializer
+    permission_classes = [IsStaffOnlyOrReadAny]
 
 
 class CompanyUseViewSet(ModelViewSet):
     # get all company uses
     queryset = CompanyUse.objects.all()
     serializer_class = CompanyUseSerializer
+    permission_classes = [IsStaffOnlyOrReadAny]
 
 
 class ClassOfDeviceViewSet(ModelViewSet):
@@ -29,8 +32,8 @@ class ClassOfDeviceViewSet(ModelViewSet):
     queryset = ClassOfDevice.objects.all()
     serializer_class = ClassOfDeviceSerializer
     '''Для проверки аутентификации пользователя при запросах - IsAuthenticated'''
-    '''IsAuthenticatedOrReadOnly - Get запросы доступны для незарегистрированных юзеров'''
-    # permission_classes = [IsUserOrStuffOnly]
+    '''IsAuthenticatedOrReadOnly - Get запросы доступны для обычных юзеров'''
+    permission_classes = [IsStaffOnlyOrReadAny]
     '''подключение фильтров'''
     filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]
     filterset_fields = ['name']
@@ -45,24 +48,28 @@ class SiCheckViewSet(ModelViewSet):
     # get all company uses
     queryset = SiCheck.objects.all()
     serializer_class = SiCheckSerializer
+    permission_classes = [IsStaffOnlyOrReadAny]
 
 
 class IoCheckViewSet(ModelViewSet):
     # get all company uses
     queryset = IoCheck.objects.all()
     serializer_class = IoCheckSerializer
+    permission_classes = [IsStaffOnlyOrReadAny]
 
 
 class IndicatorCheckViewSet(ModelViewSet):
     # get all company uses
     queryset = IndicatorCheck.objects.all()
     serializer_class = IndicatorCheckSerializer
+    permission_classes = [IsStaffOnlyOrReadAny]
 
 
 class SkCheckViewSet(ModelViewSet):
     # get all company uses
     queryset = SkCheck.objects.all()
     serializer_class = SkCheckSerializer
+    permission_classes = [IsStaffOnlyOrReadAny]
 
 
 class AllCheckAPIView(FlatMultipleModelAPIView):
@@ -81,7 +88,7 @@ class IntervalCheckViewSet(ModelViewSet):
     serializer_class = IntervalCheckSerializer
     '''Для проверки аутентификации пользователя при запросах - IsAuthenticated'''
     '''IsAuthenticatedOrReadOnly - Get запросы доступны для незарегистрированных юзеров'''
-    # permission_classes = {IsUserOrStuffOnly}
+    permission_classes = [IsStaffOnlyOrReadAny]
     '''подключение фильтров'''
     filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]
     filterset_fields = ['interval']
@@ -95,8 +102,7 @@ class CompanyCheckViewSet(ModelViewSet):
     serializer_class = CompanyCheckSerializer
     '''Для проверки аутентификации пользователя при запросах - IsAuthenticated'''
     '''IsAuthenticatedOrReadOnly - Get запросы доступны для незарегистрированных юзеров'''
-    # permission_classes = [IsAuthenticatedOrReadOnly]
-    # permission_classes = [IsUserOrStuffOnly]
+    permission_classes = [IsStaffOnlyOrReadAny]
     '''подключение фильтров'''
     filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]
     filterset_fields = ['name']
@@ -110,7 +116,7 @@ class TypeOfSiViewSet(ModelViewSet):
     serializer_class = TypeOfSiSerializer
     '''Для проверки аутентификации пользователя при запросах - IsAuthenticated'''
     '''IsAuthenticatedOrReadOnly - Get запросы доступны для незарегистрированных юзеров'''
-    # permission_classes = [IsUserOrStuffOnly]
+    permission_classes = [IsStaffOnlyOrReadAny]
     '''подключение фильтров'''
     filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]
     filterset_fields = ['name', 'regNumber']
