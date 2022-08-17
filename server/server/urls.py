@@ -15,6 +15,24 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+# create obj of routers
+from rest_framework import routers
+
+from devices.views import *
+
+router = routers.SimpleRouter()
+# # create url for router and view
+router.register(r'api/v1/devices', DeviceViewSet)
+router.register(r'api/v1/companyuse', CompanyUseViewSet)
+router.register(r'api/v1/classofdevice', ClassOfDeviceViewSet)
+router.register(r'api/v1/interval', IntervalCheckViewSet)
+router.register(r'api/v1/companycheck', CompanyCheckViewSet)
+router.register(r'api/v1/typeofsi', TypeOfSiViewSet)
+router.register(r'api/v1/sichecks', SiCheckViewSet)
+router.register(r'api/v1/iochecks', IoCheckViewSet)
+router.register(r'api/v1/indicatorchecks', IndicatorCheckViewSet)
+router.register(r'api/v1/skchecks', SkCheckViewSet)
+router.register(r'api/v1/allchecks', AllCheckAPIView)
 
 
 urlpatterns = [
@@ -22,3 +40,6 @@ urlpatterns = [
     path('api-server/', include('rest_framework.urls')),
     path('users/', include('users.urls')),
 ]
+
+# add url to urlpatters
+urlpatterns += router.urls
