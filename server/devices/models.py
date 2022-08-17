@@ -101,7 +101,7 @@ class SiCheck(models.Model):
     device = models.ForeignKey(Device, on_delete=models.CASCADE, verbose_name='средство измерений')
     date_verify = models.DateField('Дата поверки', null=True)
     number_verify = models.CharField('Реквизит проверки', max_length=100, null=True)
-    price_verify = models.DecimalField('Стоимость поверки', max_length=10, null=True)
+    price_verify = models.DecimalField('Стоимость поверки', max_digits=10, decimal_places=2, null=True)
     type = models.ForeignKey(TypeOfSi, on_delete=models.SET_NULL, null=True, verbose_name='Тип СИ')
     who_check = models.ForeignKey(CompanyCheck, on_delete=models.SET_NULL, null=True,
                                   verbose_name='поверитель')

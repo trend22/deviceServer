@@ -32,10 +32,10 @@ router.register(r'api/v1/sichecks', SiCheckViewSet)
 router.register(r'api/v1/iochecks', IoCheckViewSet)
 router.register(r'api/v1/indicatorchecks', IndicatorCheckViewSet)
 router.register(r'api/v1/skchecks', SkCheckViewSet)
-router.register(r'api/v1/allchecks', AllCheckAPIView)
 
 
 urlpatterns = [
+    path('api/v1/allcheck/', AllCheckAPIView.as_view(), name="showallcheck"),
     path('admin/', admin.site.urls),
     path('api-server/', include('rest_framework.urls')),
     path('users/', include('users.urls')),
