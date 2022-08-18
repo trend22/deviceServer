@@ -98,7 +98,8 @@ class TypeOfSi(models.Model):
 
 
 class SiCheck(models.Model):
-    device = models.ForeignKey(Device, on_delete=models.CASCADE, verbose_name='средство измерений')
+    device = models.ForeignKey(Device, on_delete=models.CASCADE, verbose_name='средство измерений',
+                               related_name='si_checks')
     date_verify = models.DateField('Дата поверки', null=True)
     number_verify = models.CharField('Реквизит проверки', max_length=100, null=True)
     price_verify = models.DecimalField('Стоимость поверки', max_digits=10, decimal_places=2, null=True)

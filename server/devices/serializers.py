@@ -12,6 +12,16 @@ class DeviceSerializer(ModelSerializer):
         fields = '__all__'
 
 
+'''модификации сериализаторов для модели, связанные с проверками разных классов устройств'''
+
+
+class DeviceWithSiCheckSerializer(ModelSerializer):
+    class Meta:
+        model = Device
+        depth = 1
+        fields = ['name', 'serial_number', 'class_device', 'who_use', 'si_checks']
+
+
 class CompanyUseSerializer(ModelSerializer):
     class Meta:
         model = CompanyUse

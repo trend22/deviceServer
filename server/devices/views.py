@@ -8,7 +8,7 @@ from .models import Device, CompanyUse, ClassOfDevice, SiCheck, IoCheck, Indicat
 from .permissions import IsStaffOnlyOrReadAny
 from .serializers import DeviceSerializer, CompanyUseSerializer, ClassOfDeviceSerializer, SiCheckSerializer, \
     IoCheckSerializer, IndicatorCheckSerializer, SkCheckSerializer, IntervalCheckSerializer, CompanyCheckSerializer, \
-    TypeOfSiSerializer
+    TypeOfSiSerializer, DeviceWithSiCheckSerializer
 
 '''Представления для моделей устройств'''
 
@@ -17,6 +17,18 @@ class DeviceViewSet(ModelViewSet):
     # get all company uses
     queryset = Device.objects.all()
     serializer_class = DeviceSerializer
+    permission_classes = [IsStaffOnlyOrReadAny]
+    # настройка фильтров
+    filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]
+    filterset_fields = ['name', 'class_device', 'who_use']
+    search_fields = ['name', 'class_device', 'who_use']
+    ordering_fields = ['name', 'class_device', 'who_use']
+
+
+class DeviceWithSiCheckViewSet(ModelViewSet):
+    # get devices with ONLY SI checks
+    queryset = Device.objects.all()
+    serializer_class = DeviceWithSiCheckSerializer
     permission_classes = [IsStaffOnlyOrReadAny]
     # настройка фильтров
     filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]
