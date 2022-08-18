@@ -18,6 +18,11 @@ class DeviceViewSet(ModelViewSet):
     queryset = Device.objects.all()
     serializer_class = DeviceSerializer
     permission_classes = [IsStaffOnlyOrReadAny]
+    # настройка фильтров
+    filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]
+    filterset_fields = ['name', 'class_device', 'who_use']
+    search_fields = ['name', 'class_device', 'who_use']
+    ordering_fields = ['name', 'class_device', 'who_use']
 
 
 class CompanyUseViewSet(ModelViewSet):
@@ -25,7 +30,10 @@ class CompanyUseViewSet(ModelViewSet):
     queryset = CompanyUse.objects.all()
     serializer_class = CompanyUseSerializer
     permission_classes = [IsStaffOnlyOrReadAny]
-
+    '''подключение фильтров'''
+    filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]
+    filterset_fields = ['name']
+    ordering_fields = ['name']
 
 class ClassOfDeviceViewSet(ModelViewSet):
     # get all company checks
@@ -37,8 +45,7 @@ class ClassOfDeviceViewSet(ModelViewSet):
     '''подключение фильтров'''
     filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]
     filterset_fields = ['name']
-    search_fields = ['name']
-    ordering_field = ['name']
+    ordering_fields = ['name']
 
 
 '''представления для моделей проверок'''
@@ -49,6 +56,9 @@ class SiCheckViewSet(ModelViewSet):
     queryset = SiCheck.objects.all()
     serializer_class = SiCheckSerializer
     permission_classes = [IsStaffOnlyOrReadAny]
+    '''настройка фильтров'''
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = ['device', 'date_verify', 'price_verify']
 
 
 class IoCheckViewSet(ModelViewSet):
@@ -56,6 +66,9 @@ class IoCheckViewSet(ModelViewSet):
     queryset = IoCheck.objects.all()
     serializer_class = IoCheckSerializer
     permission_classes = [IsStaffOnlyOrReadAny]
+    '''настройка фильтров'''
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = ['device', 'date_verify']
 
 
 class IndicatorCheckViewSet(ModelViewSet):
@@ -63,6 +76,9 @@ class IndicatorCheckViewSet(ModelViewSet):
     queryset = IndicatorCheck.objects.all()
     serializer_class = IndicatorCheckSerializer
     permission_classes = [IsStaffOnlyOrReadAny]
+    '''настройка фильтров'''
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = ['device', 'date_verify']
 
 
 class SkCheckViewSet(ModelViewSet):
@@ -70,6 +86,9 @@ class SkCheckViewSet(ModelViewSet):
     queryset = SkCheck.objects.all()
     serializer_class = SkCheckSerializer
     permission_classes = [IsStaffOnlyOrReadAny]
+    '''настройка фильтров'''
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = ['device', 'date_verify']
 
 
 class AllCheckAPIView(FlatMultipleModelAPIView):
@@ -80,6 +99,8 @@ class AllCheckAPIView(FlatMultipleModelAPIView):
         {'queryset': IndicatorCheck.objects.all(), 'serializer_class': IndicatorCheckSerializer},
         {'queryset': SkCheck.objects.all(), 'serializer_class': SkCheckSerializer},
     ]
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = ['device', 'date_verify']
 
 
 class IntervalCheckViewSet(ModelViewSet):
@@ -92,7 +113,6 @@ class IntervalCheckViewSet(ModelViewSet):
     '''подключение фильтров'''
     filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]
     filterset_fields = ['interval']
-    search_fields = ['interval']
     ordering_field = ['interval']
 
 

@@ -120,7 +120,7 @@ class SiCheck(models.Model):
 
 class IoCheck(models.Model):
     device = models.ForeignKey(Device, on_delete=models.CASCADE, verbose_name='испытательное оборудование')
-    date_attestation = models.DateField('Дата аттестации', null=True)
+    date_verify = models.DateField('Дата аттестации', null=True)
     number_attestation = models.CharField('Реквизит аттестации', max_length=100, null=True)
     is_first_attestation = models.BooleanField('Первичная аттестация', null=True, default=False)
     interval = models.ForeignKey(IntervalCheck, on_delete=models.SET_NULL, null=True,
@@ -143,7 +143,7 @@ class IoCheck(models.Model):
 
 class IndicatorCheck(models.Model):
     device = models.ForeignKey(Device, on_delete=models.CASCADE, verbose_name='индикаторы')
-    date_check = models.DateField('Дата проверки', null=True)
+    date_verify = models.DateField('Дата проверки', null=True)
     number_check = models.CharField('Реквизит проверки', max_length=100, null=True)
     interval = models.ForeignKey(IntervalCheck, on_delete=models.SET_NULL, null=True, verbose_name='Интервал проверки')
     who_check = models.ForeignKey(CompanyCheck, on_delete=models.SET_NULL, null=True,
@@ -163,7 +163,7 @@ class IndicatorCheck(models.Model):
 
 class SkCheck(models.Model):
     device = models.ForeignKey(Device, on_delete=models.CASCADE, verbose_name='средства контроля')
-    date_check = models.DateField('Дата проверки', null=True)
+    date_verify = models.DateField('Дата проверки', null=True)
     number_check = models.CharField('Реквизит проверки', max_length=100, null=True)
     docs = models.TextField('Информация о документации (методики, ЭД)', max_length=10000, null=True)
     interval = models.ForeignKey(IntervalCheck, on_delete=models.SET_NULL, null=True, verbose_name='Интервал проверки')
