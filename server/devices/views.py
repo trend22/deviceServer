@@ -3,12 +3,9 @@ from drf_multiple_model.views import FlatMultipleModelAPIView
 from rest_framework.filters import SearchFilter, OrderingFilter
 from rest_framework.viewsets import ModelViewSet
 
-from .models import Device, CompanyUse, ClassOfDevice, SiCheck, IoCheck, IndicatorCheck, SkCheck, IntervalCheck, \
-    CompanyCheck, TypeOfSi
+from .models import *
 from .permissions import IsStaffOnlyOrReadAny
-from .serializers import DeviceSerializer, CompanyUseSerializer, ClassOfDeviceSerializer, SiCheckSerializer, \
-    IoCheckSerializer, IndicatorCheckSerializer, SkCheckSerializer, IntervalCheckSerializer, CompanyCheckSerializer, \
-    TypeOfSiSerializer, DeviceWithSiCheckSerializer
+from .serializers import *
 
 '''Представления для моделей устройств'''
 
@@ -25,10 +22,11 @@ class DeviceViewSet(ModelViewSet):
     ordering_fields = ['name', 'class_device', 'who_use']
 
 
-class DeviceWithSiCheckViewSet(ModelViewSet):
+#создаём представление для отображения СИ с вложенными моделями (SiCheck и TypeOfSi)
+class DeviceWithAllCheckViewSet(ModelViewSet):
     # get devices with ONLY SI checks
     queryset = Device.objects.all()
-    serializer_class = DeviceWithSiCheckSerializer
+    serializer_class = DeviceWithAllCheckSerializer
     permission_classes = [IsStaffOnlyOrReadAny]
     # настройка фильтров
     filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]

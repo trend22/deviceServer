@@ -96,6 +96,9 @@ class TypeOfSi(models.Model):
 
 '''Модель проверки средств измерений'''
 
+'''добавляем related_name='si_checks',чтобы добавить SiCheck в модель Device. 
+Смотреть сериализатор.DeviceWithSiCheckSerializer'''
+
 
 class SiCheck(models.Model):
     device = models.ForeignKey(Device, on_delete=models.CASCADE, verbose_name='средство измерений',
@@ -120,7 +123,8 @@ class SiCheck(models.Model):
 
 
 class IoCheck(models.Model):
-    device = models.ForeignKey(Device, on_delete=models.CASCADE, verbose_name='испытательное оборудование')
+    device = models.ForeignKey(Device, on_delete=models.CASCADE, verbose_name='испытательное оборудование',
+                               related_name='io_checks')
     date_verify = models.DateField('Дата аттестации', null=True)
     number_attestation = models.CharField('Реквизит аттестации', max_length=100, null=True)
     is_first_attestation = models.BooleanField('Первичная аттестация', null=True, default=False)
@@ -143,7 +147,8 @@ class IoCheck(models.Model):
 
 
 class IndicatorCheck(models.Model):
-    device = models.ForeignKey(Device, on_delete=models.CASCADE, verbose_name='индикаторы')
+    device = models.ForeignKey(Device, on_delete=models.CASCADE, verbose_name='индикаторы',
+                               related_name='indicator_checks')
     date_verify = models.DateField('Дата проверки', null=True)
     number_check = models.CharField('Реквизит проверки', max_length=100, null=True)
     interval = models.ForeignKey(IntervalCheck, on_delete=models.SET_NULL, null=True, verbose_name='Интервал проверки')
@@ -163,7 +168,8 @@ class IndicatorCheck(models.Model):
 
 
 class SkCheck(models.Model):
-    device = models.ForeignKey(Device, on_delete=models.CASCADE, verbose_name='средства контроля')
+    device = models.ForeignKey(Device, on_delete=models.CASCADE, verbose_name='средства контроля',
+                               related_name='sk_checks')
     date_verify = models.DateField('Дата проверки', null=True)
     number_check = models.CharField('Реквизит проверки', max_length=100, null=True)
     docs = models.TextField('Информация о документации (методики, ЭД)', max_length=10000, null=True)

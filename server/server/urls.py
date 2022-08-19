@@ -23,7 +23,7 @@ from devices.views import *
 router = routers.SimpleRouter()
 # # create url for router and view
 router.register(r'api/v1/devices', DeviceViewSet)
-router.register(r'api/v1/devicesichecks', DeviceWithSiCheckViewSet)
+router.register(r'api/v1/deviceallchecks', DeviceWithAllCheckViewSet)
 router.register(r'api/v1/companyuse', CompanyUseViewSet)
 router.register(r'api/v1/classofdevice', ClassOfDeviceViewSet)
 router.register(r'api/v1/interval', IntervalCheckViewSet)

@@ -14,12 +14,7 @@ class DeviceSerializer(ModelSerializer):
 
 '''модификации сериализаторов для модели, связанные с проверками разных классов устройств'''
 
-
-class DeviceWithSiCheckSerializer(ModelSerializer):
-    class Meta:
-        model = Device
-        depth = 1
-        fields = ['name', 'serial_number', 'class_device', 'who_use', 'si_checks']
+'''Добавляем в сериализатор si_checks (related_name в модели SiCheck) и чтобы увидеть вложенности включаем depth'''
 
 
 class CompanyUseSerializer(ModelSerializer):
@@ -35,12 +30,6 @@ class ClassOfDeviceSerializer(ModelSerializer):
 
 
 '''Serializers для моделей проверки'''
-
-
-class SiCheckSerializer(ModelSerializer):
-    class Meta:
-        model = SiCheck
-        fields = '__all__'
 
 
 class IoCheckSerializer(ModelSerializer):
@@ -85,3 +74,22 @@ class TypeOfSiSerializer(ModelSerializer):
         model = TypeOfSi
         # add all fields of CompanyCheck to serializer
         fields = '__all__'
+
+
+class SiCheckSerializer(ModelSerializer):
+
+    class Meta:
+        model = SiCheck
+        depth = 1
+        fields = ['id', 'device', 'date_verify', 'number_verify', 'price_verify', 'type', 'who_check']
+        # fields = '__all__'
+
+
+class DeviceWithAllCheckSerializer(ModelSerializer):
+
+    class Meta:
+        model = Device
+        depth = 3
+        fields = ['id', 'name', 'serial_number', 'class_device', 'who_use', 'si_checks', 'io_checks',
+                  'indicator_checks', 'sk_checks']
+
